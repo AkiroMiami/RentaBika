@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alquileres</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<style>
+  .navbar {
+     background-color: #0070C0;
+     color: #fff;
+  }
+
+  .navbar-brand {
+     font-size: 2em;
+     font-weight: bold;
+  }
+
+  .navbar .btn-danger {
+     background-color: #dc3545;
+     border-color: #dc3545;
+  }
+
+  .navbar .btn-danger:hover {
+     background-color: #c82333;
+     border-color: #bd2130;
+  }
+
+
+body {
+ font-family: Arial, sans-serif;
+ background-color: #F5F5F5;
+}
+ 
+ h1 {
+   text-align: center;
+   margin-top: 50px;
+   color: #0070C0;
+   font-size: 3.5rem;
+ }
+ 
+ input[type="submit"] {
+   cursor: pointer;
+ }
+ 
+ a {
+   display: block;
+   margin-top: 20px;
+   text-align: center;
+   color: #0070C0;
+   text-decoration: none;
+   font-weight: bold;
+   font-size: 1.2em;
+ }
+ 
+ a:hover {
+   text-decoration: underline;
+ }
+ h1 {
+   color: #4A4A4A;
+   font-size: 2.5rem;
+   margin-top: 2rem;
+ }
+ 
+ table {
+   margin: 0 auto;
+   border-collapse: collapse;
+   width: 90%;
+   max-width: 900px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+   overflow: hidden;
+ }
+ 
+ thead {
+   background-color: #0070C0;
+   color: #FFF;
+ }
+ 
+ th,
+ td {
+   padding: 12px 15px;
+   text-align: left;
+ }
+ 
+ tbody tr:nth-child(even) {
+   background-color: #F8F8F8;
+ }
+ 
+ tbody tr:hover {
+   background-color: #EEE;
+ }
+ 
+ input[type="submit"] {
+   background-color: #0070C0;
+   color: #FFF;
+   border: none;
+   padding: 8px 12px;
+   transition: background-color 0.2s ease;
+ }
+ 
+ input[type="submit"]:hover {
+   background-color: #00529B;
+ }
+ 
+ a {
+   margin-top: 1.5rem;
+   color: #0070C0;
+   text-decoration: none;
+   transition: color 0.2s ease;
+ }
+ 
+ a:hover {
+   color: #00529B;
+ }
+  </style>
+<body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">RentaBika</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if activo == 'alquileres' %} active {% endif %}" href="/alquileres">Mostrar Alquileres</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if activo == 'usuarios' %} active {% endif %}" href="/usuarios">Ver Usuarios</a>
+        </li>
+      </ul>
+      <a class="btn btn-danger" href="/logout">Logout</a>
+    </div>
+  </nav>
+	<h1>Alquileres</h1>
+	<table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Bicicleta</th>
+            <th>Fecha de inicio</th>
+            <th>Fecha de fin</th>
+            <th>Costo</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>
+              <form method="POST" action="{{ url_for('eliminar_alquiler', id=row[0]) }}">
+                <input type="submit" value="Eliminar">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+	<br>
+</body>
+</html>

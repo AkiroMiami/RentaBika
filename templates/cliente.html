@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RentaBika</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+   .navbar {
+  background-color: #0070C0;
+  color: #fff;
+}
+
+.navbar-brand {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.navbar .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.navbar .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+/* Estilos para el formulario */
+.form-group label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.btn-primary {
+  background-color: #0070C0;
+  border-color: #0070C0;
+}
+
+.btn-primary:hover {
+  background-color: #00509D;
+  border-color: #00509D;
+}
+  </style>
+ <body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">RentaBika</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <a class="btn btn-danger" href="/logout">Logout</a>
+        </div>
+      </nav>
+    <div class="container mt-3">
+      <form method="POST" action="{{ url_for('guardar_alquiler') }}">
+        <div class="form-group">
+          <label for="usuario">Usuario:</label>
+          <input type="text" class="form-control" id="usuario" name="usuario" required>
+        </div>
+        <div class="form-group">
+          <label for="bicicleta">Bicicleta:</label>
+          <select class="form-control" id="bicicleta" name="bicicleta" required>
+            <option value="BMX">BMX</option>
+            <option value="Paseo">Paseo</option>
+            <option value="Rueditas">Rueditas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fecha_inicio">Fecha de inicio:</label>
+          <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+          <label for="hora_inicio">Hora de inicio:</label>
+          <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" required>
+        </div>
+        <div class="form-group">
+          <label for="fecha_fin">Fecha de fin:</label>
+          <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+          <label for="hora_fin">Hora de fin:</label>
+          <input type="time" class="form-control" id="hora_fin" name="hora_fin" required>
+        </div>
+        <div class="form-group">
+          <label for="duracion">Duración (horas):</label>
+          <input type="number" class="form-control" id="duracion" name="duracion" min="1" required>
+        </div>
+        <div class="form-group">
+          <label for="costo">Costo:</label>
+          <input type="number" class="form-control" id="costo" name="costo" min="20" required>
+        </div>
+        <script>
+         $("#fecha_inicio, #hora_inicio, #fecha_fin, #hora_fin").on("input", function() {
+  let fecha_inicio = $("#fecha_inicio").val();
+  let hora_inicio = $("#hora_inicio").val();
+  let fecha_fin = $("#fecha_fin").val();
+  let hora_fin = $("#hora_fin").val();
+  if (fecha_inicio && hora_inicio && fecha_fin && hora_fin) {
+    let inicio = new Date(fecha_inicio + " " + hora_inicio);
+    let fin = new Date(fecha_fin + " " + hora_fin);
+    let duracion = (fin - inicio) / (1000 * 60 * 60);
+    let costo;
+    if (duracion <= 1) {
+      costo = 20;
+    } else {
+      costo = 20 + ((duracion - 1) * 5);
+    }
+    $("#duracion").val(duracion);
+    $("#costo").val(costo);
+  }
+});
+
+
+        </script>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+      </form>
+    </div>
+  </body>
+  </html>
